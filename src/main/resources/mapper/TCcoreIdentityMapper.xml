@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.jeboot.dao.TCcoreIdentityMapper" >
+  <resultMap id="BaseResultMap" type="com.example.jeboot.entity.TCcoreIdentity" >
+    <id column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="type_code" property="typeCode" jdbcType="VARCHAR" />
+    <result column="effective_date" property="effectiveDate" jdbcType="TIMESTAMP" />
+    <result column="expired_date" property="expiredDate" jdbcType="TIMESTAMP" />
+    <result column="obverse_side_picture" property="obverseSidePicture" jdbcType="VARCHAR" />
+    <result column="reverse_side_picture" property="reverseSidePicture" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_timestamp" property="createTimestamp" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_timestamp" property="updateTimestamp" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="active" property="active" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oid, name, number, type_code, effective_date, expired_date, obverse_side_picture, 
+    reverse_side_picture, create_by, create_timestamp, update_by, update_timestamp, version, 
+    active
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_core_identity
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_core_identity
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.jeboot.entity.TCcoreIdentity" >
+    insert into t_core_identity (oid, name, number, 
+      type_code, effective_date, expired_date, 
+      obverse_side_picture, reverse_side_picture, 
+      create_by, create_timestamp, update_by, 
+      update_timestamp, version, active
+      )
+    values (#{oid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, 
+      #{typeCode,jdbcType=VARCHAR}, #{effectiveDate,jdbcType=TIMESTAMP}, #{expiredDate,jdbcType=TIMESTAMP}, 
+      #{obverseSidePicture,jdbcType=VARCHAR}, #{reverseSidePicture,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTimestamp,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTimestamp,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{active,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.jeboot.entity.TCcoreIdentity" >
+    insert into t_core_identity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="typeCode != null" >
+        type_code,
+      </if>
+      <if test="effectiveDate != null" >
+        effective_date,
+      </if>
+      <if test="expiredDate != null" >
+        expired_date,
+      </if>
+      <if test="obverseSidePicture != null" >
+        obverse_side_picture,
+      </if>
+      <if test="reverseSidePicture != null" >
+        reverse_side_picture,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTimestamp != null" >
+        create_timestamp,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTimestamp != null" >
+        update_timestamp,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="active != null" >
+        active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null" >
+        #{effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiredDate != null" >
+        #{expiredDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="obverseSidePicture != null" >
+        #{obverseSidePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="reverseSidePicture != null" >
+        #{reverseSidePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTimestamp != null" >
+        #{createTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTimestamp != null" >
+        #{updateTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="active != null" >
+        #{active,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.jeboot.entity.TCcoreIdentity" >
+    update t_core_identity
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        type_code = #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null" >
+        effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiredDate != null" >
+        expired_date = #{expiredDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="obverseSidePicture != null" >
+        obverse_side_picture = #{obverseSidePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="reverseSidePicture != null" >
+        reverse_side_picture = #{reverseSidePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTimestamp != null" >
+        create_timestamp = #{createTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTimestamp != null" >
+        update_timestamp = #{updateTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="active != null" >
+        active = #{active,jdbcType=BIT},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.jeboot.entity.TCcoreIdentity" >
+    update t_core_identity
+    set name = #{name,jdbcType=VARCHAR},
+      number = #{number,jdbcType=VARCHAR},
+      type_code = #{typeCode,jdbcType=VARCHAR},
+      effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+      expired_date = #{expiredDate,jdbcType=TIMESTAMP},
+      obverse_side_picture = #{obverseSidePicture,jdbcType=VARCHAR},
+      reverse_side_picture = #{reverseSidePicture,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_timestamp = #{createTimestamp,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_timestamp = #{updateTimestamp,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      active = #{active,jdbcType=BIT}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>
