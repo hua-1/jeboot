@@ -49,7 +49,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <version>5.1.6</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>3.2.8</version>
+            <version>3.4.2</version>
         </dependency>
 
         <!-- alibaba的druid数据库连接池 -->
