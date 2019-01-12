@@ -1,6 +1,5 @@
 package com.example.jeboot;
 
-import com.example.jeboot.entity.TCcoreIdentity;
 import com.example.jeboot.services.TCcoreIdService;
 import com.example.jeboot.services.TTestService;
 import org.junit.Test;

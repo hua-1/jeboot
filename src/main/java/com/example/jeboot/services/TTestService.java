@@ -22,7 +22,6 @@ public class TTestService {
             tTest.settName("2");
             list.add(tTest);
         }
-
         tTestMapper.batchList(list);
     }
 }

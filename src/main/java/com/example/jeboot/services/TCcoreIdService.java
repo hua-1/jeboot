@@ -22,7 +22,7 @@ public class TCcoreIdService {
         String[] randomNumber = getRandomNumber();
         List<TCcoreIdentity> list=new ArrayList<>();
         TCcoreIdentity tCcoreIdentity=null;
-        for (int i=0;i<2;i++){
+        for (int i=0;i<200;i++){
             String str = getStr(randomNumber);
             tCcoreIdentity=new TCcoreIdentity();
             tCcoreIdentity.setObverseSidePicture(str);
