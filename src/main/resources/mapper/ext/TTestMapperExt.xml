@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.jeboot.dao.TTestMapper">
+    <insert id="batchList">
+        <foreach collection="list" item="item" index="index" separator=";">
+            insert into t_test
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.oid != null">
+                    oid,
+                </if>
+                <if test="item.tName != null">
+                    t_name,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.oid != null">
+                    #{item.oid,jdbcType=BIGINT},
+                </if>
+                <if test="item.tName != null">
+                    #{item.tName,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+</mapper>

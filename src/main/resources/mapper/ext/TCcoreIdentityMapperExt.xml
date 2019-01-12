@@ -1,5 +1,97 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.jeboot.dao.TCcoreIdentityMapper" >
-
+    <insert id="batchInsert">
+        <foreach  collection="list" item="item" index="index" separator=";">
+            insert into t_core_identity
+            <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="item.oid != null" >
+                    oid,
+                </if>
+                <if test="item.name != null" >
+                    name,
+                </if>
+                <if test="item.number != null" >
+                    number,
+                </if>
+                <if test="item.typeCode != null" >
+                    type_code,
+                </if>
+                <if test="item.effectiveDate != null" >
+                    effective_date,
+                </if>
+                <if test="item.expiredDate != null" >
+                    expired_date,
+                </if>
+                <if test="item.obverseSidePicture != null" >
+                    obverse_side_picture,
+                </if>
+                <if test="item.reverseSidePicture != null" >
+                    reverse_side_picture,
+                </if>
+                <if test="item.createBy != null" >
+                    create_by,
+                </if>
+                <if test="item.createTimestamp != null" >
+                    create_timestamp,
+                </if>
+                <if test="item.updateBy != null" >
+                    update_by,
+                </if>
+                <if test="item.updateTimestamp != null" >
+                    update_timestamp,
+                </if>
+                <if test="item.version != null" >
+                    version,
+                </if>
+                <if test="item.active != null" >
+                    active,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="item.oid != null" >
+                    #{item.oid,jdbcType=BIGINT},
+                </if>
+                <if test="item.name != null" >
+                    #{item.name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.number != null" >
+                    #{item.number,jdbcType=VARCHAR},
+                </if>
+                <if test="item.typeCode != null" >
+                    #{item.typeCode,jdbcType=VARCHAR},
+                </if>
+                <if test="item.effectiveDate != null" >
+                    #{item.effectiveDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.expiredDate != null" >
+                    #{item.expiredDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.obverseSidePicture != null" >
+                    #{item.obverseSidePicture,jdbcType=VARCHAR},
+                </if>
+                <if test="item.reverseSidePicture != null" >
+                    #{item.reverseSidePicture,jdbcType=VARCHAR},
+                </if>
+                <if test="item.createBy != null" >
+                    #{item.createBy,jdbcType=VARCHAR},
+                </if>
+                <if test="item.createTimestamp != null" >
+                    #{item.createTimestamp,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updateBy != null" >
+                    #{item.updateBy,jdbcType=VARCHAR},
+                </if>
+                <if test="item.updateTimestamp != null" >
+                    #{item.updateTimestamp,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.version != null" >
+                    #{item.version,jdbcType=INTEGER},
+                </if>
+                <if test="item.active != null" >
+                    #{item.active,jdbcType=BIT},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
 </mapper>
