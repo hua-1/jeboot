@@ -32,7 +32,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="t_core_identity" domainObjectName="TCcoreIdentity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+        <table tableName="t_test" domainObjectName="TTest" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false"   selectByExampleQueryId="false" />
     </context>
 </generatorConfiguration>

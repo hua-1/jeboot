@@ -1,8 +1,10 @@
 package com.example.jeboot.entity;
 
+import com.example.jeboot.base.BaseEntity;
+
 import java.util.Date;
 
-public class TCcoreIdentity {
+public class TCcoreIdentity extends BaseEntity{
     private Long oid;
 
     private String name;
