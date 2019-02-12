@@ -79,4 +79,16 @@ public class ArraysTest {
         System.out.println("cost time: " + (endTime - beginTime) + "ms");
     }
 
+    @Test
+    public void testCpu(){
+        Set<MyObject> objects = new LinkedHashSet<MyObject>();
+        objects.add(new MyObject());
+        objects.add(new MyObject());
+        objects.add(new MyObject());
+        System.out.println(objects.size());
+        while(true) {
+            objects.add(new MyObject());
+        }
+    }
+
 }

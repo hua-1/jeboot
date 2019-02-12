@@ -52,3 +52,9 @@ mybatis:
 #  supportMethodsArguments: true
 #  params: count=countSql
 
+logging:
+  level:
+    com:
+      example:
+        jeboot:
+            dao: debug

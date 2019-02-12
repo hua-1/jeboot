@@ -1,14 +1,37 @@
 package com.example.jeboot.services;
 
+import com.example.jeboot.config.RedisService;
+import com.example.jeboot.dao.TCcoreIdentityMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.BitSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RedisServices {
 
 
-    public void test(){
-        BitSet set=new BitSet();
+    @Autowired
+    private RedisService redisService;
+
+    @Autowired
+    private TCcoreIdentityMapper tCcoreIdentityMapper;
+
+    public void addRedis() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        redisService.set("1", list);
     }
+
+    public void getRedis(){
+        String s = redisService.get("1");
+        if (s==null){
+            throw new RuntimeException("无知");
+        }else {
+            throw new RuntimeException("那错误值了");
+        }
+    }
+
 }
