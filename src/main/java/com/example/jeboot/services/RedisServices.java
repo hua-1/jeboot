@@ -2,6 +2,7 @@ package com.example.jeboot.services;
 
 import com.example.jeboot.config.RedisService;
 import com.example.jeboot.dao.TCcoreIdentityMapper;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +35,10 @@ public class RedisServices {
         }
     }
 
+    public void getString(String k1){
+        String s = redisService.get(k1);
+        if (StringUtils.isEmpty(s)){
+            redisService.set(k1,200);
+        }
+    }
 }

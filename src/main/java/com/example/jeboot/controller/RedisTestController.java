@@ -31,4 +31,9 @@ public class RedisTestController {
     public void getRedis(HttpServletRequest request){
         redisServices.getRedis();
     }
+
+
+    public void getSetMan(){
+        redisServices.getString("k1");
+    }
 }

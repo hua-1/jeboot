@@ -15,7 +15,7 @@ public class TTestService {
 
     @Autowired
     private TTestMapper tTestMapper;
-    ExecutorService exec= Executors.newCachedThreadPool();
+    ExecutorService exec= Executors.newSingleThreadExecutor();
 
     public void addAll(){
         TTest tTest=new TTest();
@@ -27,27 +27,25 @@ public class TTestService {
     }
 
     public void addThread() throws ExecutionException, InterruptedException {
+        CountDownLatch begin = new CountDownLatch(1);
         TTest tTest=new TTest();
-        tTest.settName("测试并发数");
-        List list=new ArrayList();
-        list.add(tTest);
-        Callable callable=new Callable() {
-            @Override
-            public Object call() throws Exception {
-                tTestMapper.batchList(list);
-                return null;
-            }
-        };
-        Future<Object> submit = (Future<Object>) exec.submit(new Runnable() {
-            @Override
-            public void run() {
-                tTestMapper.selectByPrimaryKey(64L);
-            }
-        });
-        submit.cancel(true);
-        Object o = submit.get();
+        tTest.settName("测试并发数123");
+        List<Future> list1=new ArrayList<>();
+        for (int i=0;i<5;i++){
+            Future<Object> submit = exec.submit(new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    tTestMapper.insert(tTest);
+                    return null;
+                }
+            });
 
-        exec.shutdown();
+            list1.add(submit);
+        }
+        for (Future f:list1){
+            System.out.println(f.get());
+        }
+
     }
 
     @Test
@@ -68,7 +66,23 @@ public class TTestService {
                 TTest tTest = tTestMapper.selectByPrimaryKey(64L);
             }
         }).start();
+
     }
 
+    @Test
+    public void threadInter() throws InterruptedException {
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("方法執行了");
+            }
+        });
+        thread.start();
+        Thread.sleep(3000L);
+        thread.interrupt();
+        System.out.println(thread.isAlive());
+        Thread.sleep(3000L);
+
+    }
 
 }
