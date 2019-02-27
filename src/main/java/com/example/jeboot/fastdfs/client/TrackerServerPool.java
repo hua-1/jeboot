@@ -65,7 +65,6 @@ public class TrackerServerPool {
             if(maxStorageConnection > 0){
                 poolConfig.setMaxTotal(maxStorageConnection);
             }
-
             trackerServerPool = new GenericObjectPool<>(new TrackerServerFactory(), poolConfig);
         }
         return trackerServerPool;

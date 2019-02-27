@@ -7,6 +7,7 @@ import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -133,7 +134,7 @@ public class FastDFSClient {
      * @param base64 文件base64
      * @return 返回上传成功后的文件路径
      */
-    public String uploadFileWithBase64(String base64) throws FastDFSException {
+    public String uploadFileWithBase64(String base64) throws FastDFSException, IOException {
         return upload(base64, null, null);
     }
 
@@ -144,7 +145,7 @@ public class FastDFSClient {
      * @param filename 文件名
      * @return 返回上传成功后的文件路径
      */
-    public String uploadFileWithBase64(String base64, String filename) throws FastDFSException {
+    public String uploadFileWithBase64(String base64, String filename) throws FastDFSException, IOException {
         return upload(base64, filename, null);
     }
 
@@ -156,7 +157,7 @@ public class FastDFSClient {
      * @param descriptions 文件描述信息
      * @return 返回上传成功后的文件路径
      */
-    public String uploadFileWithBase64(String base64, String filename, Map<String, String> descriptions) throws FastDFSException {
+    public String uploadFileWithBase64(String base64, String filename, Map<String, String> descriptions) throws FastDFSException, IOException {
         return upload(base64, filename, descriptions);
     }
 
@@ -206,6 +207,8 @@ public class FastDFSClient {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new FastDFSException(ErrorCode.FILE_NOT_EXIST.CODE, ErrorCode.FILE_NOT_EXIST.MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return path;
@@ -220,12 +223,17 @@ public class FastDFSClient {
      * @return 文件路径
      * @throws FastDFSException base64为空则抛出异常
      */
-    public String upload(String base64, String filename, Map<String, String> descriptions) throws FastDFSException {
+    public String upload(String base64, String filename, Map<String, String> descriptions) throws FastDFSException, IOException {
         if (StringUtils.isBlank(base64)) {
             throw new FastDFSException(ErrorCode.FILE_ISNULL.CODE, ErrorCode.FILE_ISNULL.MESSAGE);
         }
         return upload(new ByteArrayInputStream(Base64.decodeBase64(base64)), filename, descriptions);
     }
+
+    @Value("${storage_servers}")
+    private static String storageServers;
+    @Value("${storage_port}")
+    private static int storagePort;
 
     /**
      * 上传通用方法
@@ -236,7 +244,7 @@ public class FastDFSClient {
      * @return 组名+文件路径，如：group1/M00/00/00/wKgz6lnduTeAMdrcAAEoRmXZPp870.jpeg
      * @throws FastDFSException
      */
-    public String upload(InputStream is, String filename, Map<String, String> descriptions) throws FastDFSException {
+    public String upload(InputStream is, String filename, Map<String, String> descriptions) throws FastDFSException, IOException {
         if (is == null) {
             throw new FastDFSException(ErrorCode.FILE_ISNULL.CODE, ErrorCode.FILE_ISNULL.MESSAGE);
         }
@@ -276,7 +284,7 @@ public class FastDFSClient {
 //        }
 
         TrackerServer trackerServer = TrackerServerPool.borrowObject();
-        StorageClient1 storageClient = new StorageClient1(trackerServer, null);
+        StorageClient1 storageClient = new StorageClient1(trackerServer, new StorageServer("120.27.228.232",23000,2));
         try {
             // 读取流
             byte[] fileBuff = new byte[is.available()];

@@ -3,6 +3,8 @@ package com.example.jeboot.controller;
 import com.example.jeboot.fastdfs.client.FastDFSClient;
 import com.example.jeboot.fastdfs.client.FastDFSException;
 import com.example.jeboot.fastdfs.client.FileResponseData;
+import org.csource.common.MyException;
+import org.csource.fastdfs.StorageClient1;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +20,7 @@ public class FileController {
 
     @PostMapping("/upload")
     @ResponseBody
-    public FileResponseData upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+    public FileResponseData upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException, MyException {
         FileResponseData fileNameInfo=new FileResponseData();
         if (file.isEmpty()) {
              fileNameInfo.setMessage("上传失败，请选择文件");
@@ -33,6 +35,7 @@ public class FileController {
             e.printStackTrace();
         }
         fileNameInfo.setMessage("上传失败");
+
         return fileNameInfo;
     }
 
@@ -47,5 +50,10 @@ public class FileController {
          while (stringTokenizer.hasMoreElements()){
              System.out.println(stringTokenizer.nextToken());
          }
+    }
+
+
+    public void test(){
+
     }
 }
