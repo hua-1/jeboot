@@ -1,6 +1,6 @@
 
 server:
-  port: 8030
+  port: 10001
 
 spring:
   datasource:
@@ -39,8 +39,9 @@ spring:
       max-idle: 8
       min-idle: 0
     timeout: 0
+  application:
+    name: eureka-server
 
-## �����ýڵ�Ϊ�����Ľڵ㣬�кܶ�ͬѧ���׽�������÷���spring�Ľڵ��£����������޷���ʶ��
 mybatis:
   mapper-locations: classpath*:mapper/*/*.xml,mapper/*.xml
   type-aliases-package: com.example.jeboot.entity  # ע�⣺��Ӧʵ�����·��
@@ -58,3 +59,10 @@ logging:
       example:
         jeboot:
             dao: debug
+
+eureka:
+  instance:
+      hostname: localhost
+  client: #not a client,don't register with yourself
+    registerWithEureka: false
+    fetchRegistry: false

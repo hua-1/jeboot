@@ -50,7 +50,7 @@ public class JebootApplicationTests {
 
     @Test
     public void getThread(){
-        tTestService.getThread();
+        tTestService.addTr();
     }
 }
 
