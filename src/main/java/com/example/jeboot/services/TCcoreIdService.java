@@ -59,4 +59,16 @@ public class TCcoreIdService {
     }
 
 
+    public void trA(){
+        TCcoreIdentity tCcoreIdentity=new TCcoreIdentity();
+        tCcoreIdentity.setName("haha1");
+        tCcoreIdentityMapper.insert(tCcoreIdentity);
+    }
+
+    @Transactional
+    public void trB(){
+        TCcoreIdentity tCcoreIdentity=new TCcoreIdentity();
+        tCcoreIdentity.setName("haha2");
+        tCcoreIdentityMapper.insert(tCcoreIdentity);
+    }
 }
