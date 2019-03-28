@@ -21,6 +21,7 @@ public class TTestService {
 
     @Autowired
     private TCcoreIdService tCcoreIdService;
+
     public void addAll() {
         TTest tTest = new TTest();
         tTest.settName("测试并发数");
@@ -106,18 +107,16 @@ public class TTestService {
         int i = 1 / 0;
     }
 
-
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void trB() throws Exception {
         TTest tTest = new TTest();
         tTest.settName("1290 2");
-        tTestMapper.insert(tTest);
-        trA();
+        tTestMapper.insertSelective(tTest);
         throw new RuntimeException("报错");
     }
 
 
-    public void trC(){
+    public void trC() {
         tCcoreIdService.trA();
     }
 

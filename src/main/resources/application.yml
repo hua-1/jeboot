@@ -9,6 +9,8 @@ spring:
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
+  transaction:
+    rollback-on-commit-failure: true
 
   redis:
     database: 0
