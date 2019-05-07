@@ -1,8 +1,8 @@
 package com.example.jeboot.base;
 
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface BaseMapper<ID, T> {
     int deleteByPrimaryKey(Long oid);
 

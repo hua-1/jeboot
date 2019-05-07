@@ -103,12 +103,12 @@ public class TTestService {
         TTest tTest = new TTest();
         tTest.settName("1290 1");
         tTestMapper.insert(tTest);
-        trB();
+        addB();
         int i = 1 / 0;
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void trB() throws Exception {
+    @Transactional(rollbackFor=Exception.class)
+    public void addB() throws Exception {
         TTest tTest = new TTest();
         tTest.settName("1290 2");
         tTestMapper.insertSelective(tTest);

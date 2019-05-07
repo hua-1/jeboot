@@ -19,7 +19,7 @@ public class TransTest {
 
     @GetMapping("trB")
     public void trB() throws Exception {
-        tTestService.trB();
+        tTestService.addB();
     }
 
     @GetMapping("trC")
