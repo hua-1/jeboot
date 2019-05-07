@@ -90,7 +90,6 @@ public class TTestService {
 
     }
 
-    @Transactional
     public void addTr() {
         TTest tTest = new TTest();
         tTest.settName("1290");
@@ -99,11 +98,10 @@ public class TTestService {
     }
 
 
-    public void trA() throws Exception {
+    public void addA() throws Exception {
         TTest tTest = new TTest();
         tTest.settName("1290 1");
-        tTestMapper.insert(tTest);
-        addB();
+        tTestMapper.insertSelectiveOne(tTest);
         int i = 1 / 0;
     }
 
@@ -121,7 +119,7 @@ public class TTestService {
     }
 
     public void trD() throws Exception {
-        trA();
+        addA();
         tCcoreIdService.trB();
     }
 }

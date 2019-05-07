@@ -14,7 +14,7 @@ public class TransTest {
 
     @GetMapping("trA")
     public void trA() throws Exception {
-        tTestService.trA();
+        tTestService.addA();
     }
 
     @GetMapping("trB")

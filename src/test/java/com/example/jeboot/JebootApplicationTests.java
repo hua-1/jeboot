@@ -22,7 +22,7 @@ public class JebootApplicationTests {
 
     @Test
     public void add() throws Exception {
-        tTestService.trA();
+        tTestService.addA();
     }
 }
 

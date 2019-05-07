@@ -18,48 +18,47 @@ import org.springframework.transaction.interceptor.*;
 
 //@Component 事务依然生效
 @Configuration
+@Aspect
 public class TxAdviceInterceptor {
-    /*事务拦截类型*/
-    @Bean("txSource")
-    public TransactionAttributeSource transactionAttributeSource(){
-        NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
-        /*只读事务，不做更新操作*/
-        RuleBasedTransactionAttribute readOnlyTx = new RuleBasedTransactionAttribute();
-        readOnlyTx.setReadOnly(true);
-        readOnlyTx.setPropagationBehavior(TransactionDefinition.PROPAGATION_NOT_SUPPORTED );
-        /*当前存在事务就使用当前事务，当前不存在事务就创建一个新的事务*/
-        //RuleBasedTransactionAttribute requiredTx = new RuleBasedTransactionAttribute();
-        //requiredTx.setRollbackRules(
-        //  Collections.singletonList(new RollbackRuleAttribute(Exception.class)));
-        //requiredTx.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-        RuleBasedTransactionAttribute requiredTx = new RuleBasedTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRED,
-                Collections.singletonList(new RollbackRuleAttribute(Exception.class)));
-        requiredTx.setTimeout(5);
-        Map<String, TransactionAttribute> txMap = new HashMap<>();
-        txMap.put("add*", requiredTx);
-        txMap.put("save*", requiredTx);
-        txMap.put("insert*", requiredTx);
-        txMap.put("update*", requiredTx);
-        txMap.put("delete*", requiredTx);
-        txMap.put("get*", readOnlyTx);
-        txMap.put("query*", readOnlyTx);
-        source.setNameMap( txMap );
-        return source;
-    }
 
-    /**切面拦截规则 参数会自动从容器中注入*/
+    private static final String AOP_POINTCUT_EXPRESSION = "execution(* com.example.jeboot.services..*.*(..))";
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
     @Bean
-    public AspectJExpressionPointcutAdvisor pointcutAdvisor(TransactionInterceptor txInterceptor){
-        AspectJExpressionPointcutAdvisor pointcutAdvisor = new AspectJExpressionPointcutAdvisor();
-        pointcutAdvisor.setAdvice(txInterceptor);
-        pointcutAdvisor.setExpression("execution (* com.example.jeboot.services.*.*(..))");
-        return pointcutAdvisor;
+    public TransactionInterceptor txAdvice() {
+
+        DefaultTransactionAttribute txAttr_REQUIRED = new DefaultTransactionAttribute();
+        txAttr_REQUIRED.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+        DefaultTransactionAttribute txAttr_REQUIRED_READONLY = new DefaultTransactionAttribute();
+        txAttr_REQUIRED_READONLY.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        txAttr_REQUIRED_READONLY.setReadOnly(true);
+
+        NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
+
+        source.addTransactionalMethod("save*", txAttr_REQUIRED);
+        source.addTransactionalMethod("add*", txAttr_REQUIRED);
+        source.addTransactionalMethod("delete*", txAttr_REQUIRED);
+        source.addTransactionalMethod("update*", txAttr_REQUIRED);
+        source.addTransactionalMethod("exec*", txAttr_REQUIRED);
+        source.addTransactionalMethod("set*", txAttr_REQUIRED);
+        source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("query*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("find*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("list*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("count*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("is*", txAttr_REQUIRED_READONLY);
+
+        return new TransactionInterceptor(transactionManager, source);
     }
 
-
-    /*事务拦截器*/
-    @Bean("txInterceptor")
-    TransactionInterceptor getTransactionInterceptor(PlatformTransactionManager tx){
-        return new TransactionInterceptor(tx , transactionAttributeSource()) ;
+    @Bean
+    public Advisor txAdviceAdvisor() {
+        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression(AOP_POINTCUT_EXPRESSION);
+        return new DefaultPointcutAdvisor(pointcut, txAdvice());
     }
+
 }

@@ -22,4 +22,23 @@
             </trim>
         </foreach>
     </insert>
+    <insert id="insertSelectiveOne" parameterType="com.example.jeboot.entity.TTest">
+        insert into t_test
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="oid != null">
+                oid,
+            </if>
+            <if test="tName != null">
+                t_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="oid != null">
+                #{oid,jdbcType=BIGINT},
+            </if>
+            <if test="tName != null">
+                #{tName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 </mapper>

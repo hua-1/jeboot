@@ -10,4 +10,6 @@ import java.util.List;
 public interface TTestMapper  extends BaseMapper<TTest,TTest> {
 
     int  batchList(@Param("list") List<TTest> list);
+
+    int insertSelectiveOne(TTest tTest);
 }
